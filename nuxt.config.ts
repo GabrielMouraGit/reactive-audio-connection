@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      signalingUrl: process.env.NUXT_PUBLIC_SIGNALING_URL || 'ws://localhost:3005',
+      signalingUrl:       process.env.NUXT_PUBLIC_SIGNALING_URL || 'ws://localhost/ws',
     },
   },
 })
