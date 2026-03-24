@@ -4,7 +4,7 @@
 
     <section class="panel">
       <label>Signaling server URL</label>
-      <input v-model="wsUrl" placeholder="ws://localhost:3004" />
+      <input v-model="wsUrl" placeholder="ws://localhost:3005" />
 
       <label>Sala</label>
       <input v-model="roomId" placeholder="nome-da-sala" />
