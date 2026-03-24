@@ -5,6 +5,8 @@ services:
     build: .
     container_name: audio-chat-app
     restart: always
+    environment:
+      - NUXT_PUBLIC_SIGNALING_URL="https://audio.tytec.com.br/ws"
     ports:
       - "3000:3000"
       - "3005:3005"
