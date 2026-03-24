@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "concurrently \"PORT=3005 npm run signal\" \"PORT=3000 nuxt dev\"",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "signal": "node server.js",
+    "signal": "PORT=3005 node server.js",
     "start": "concurrently \"npm run signal\" \"npm run preview\""
   },
   "dependencies": {
