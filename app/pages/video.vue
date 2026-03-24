@@ -121,12 +121,15 @@
 </template>
 
 <script setup>
-import { ref, reactive, onUnmounted, nextTick } from 'vue';
+import { ref, reactive, onUnmounted, nextTick, watch } from 'vue';
 import { useSignaling } from '../../composables/useSignaling';
 import { useWebRTC } from '../../composables/useWebRTC';
 import { useAudioMeter } from '../../composables/useAudioMeter';
 
-const wsUrl = ref('ws://localhost:3005');
+const runtimeConfig = useRuntimeConfig();
+const initialWsUrl = runtimeConfig.public.signalingUrl;
+const wsUrl = ref(initialWsUrl);
+
 const roomId = ref('');
 const status = ref('desconectado');
 const userId = ref('');
@@ -151,6 +154,7 @@ const screenStream = ref(null);
 const webcamStream = ref(null);
 const remoteScreenStream = ref(null);
 const remoteWebcamStream = ref(null);
+const remoteAudioStream = ref(null);
 
 let callbacksSetup = false;
 let localMeterCleaner = null;
@@ -190,8 +194,8 @@ function syncMediaElements() {
     remoteWebcamEl.value.srcObject = remoteWebcamStream.value;
   }
 
-  if (remoteAudioEl.value && remoteWebcamStream.value) {
-    remoteAudioEl.value.srcObject = remoteWebcamStream.value;
+  if (remoteAudioEl.value && remoteAudioStream.value) {
+    remoteAudioEl.value.srcObject = remoteAudioStream.value;
   }
 }
 
@@ -219,8 +223,9 @@ function handleRemoteTrack(event) {
   const track = event.track;
   addLog(`Track remoto recebido: tipo=${track.kind}, label=${track.label || 'vazio'}`);
 
+  const stream = event.streams?.[0] || new MediaStream([track]);
+
   if (track.kind === 'video') {
-    const stream = new MediaStream([track]);
     if (isScreenTrack(track)) {
       remoteScreenStream.value = stream;
       remoteScreenEnabled.value = true;
@@ -233,8 +238,7 @@ function handleRemoteTrack(event) {
   }
 
   if (track.kind === 'audio') {
-    const stream = new MediaStream([track]);
-    remoteAudioEl.value && (remoteAudioEl.value.srcObject = stream);
+    remoteAudioStream.value = stream;
   }
 
   syncMediaElements();

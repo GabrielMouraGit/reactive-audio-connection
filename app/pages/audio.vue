@@ -78,12 +78,15 @@
 </template>
 
 <script setup>
-import { ref, reactive, onUnmounted, nextTick } from 'vue';
+import { ref, reactive, onUnmounted, nextTick, watch } from 'vue';
 import { useSignaling } from '../../composables/useSignaling';
 import { useWebRTC } from '../../composables/useWebRTC';
 import { useAudioMeter } from '../../composables/useAudioMeter';
 
-const wsUrl = ref('ws://localhost:3005');
+const runtimeConfig = useRuntimeConfig();
+const initialWsUrl = runtimeConfig.public.signalingUrl;
+const wsUrl = ref(initialWsUrl);
+
 const roomId = ref('');
 const status = ref('desconectado');
 const userId = ref('');
