@@ -28,7 +28,7 @@ jobs:
             rm -rf $DEPLOY_DIR
 
             echo "📦 Clonando repositório..."
-            git clone https://GabrielMouraGit:${{ secrets.GIT_TOKEN }}@github.com/GabrielMouraGit/audio-chat.git $DEPLOY_DIR
+            git clone https://GabrielMouraGit:${{ secrets.GIT_TOKEN }}@github.com/GabrielMouraGit/reactive-audio-connection.git $DEPLOY_DIR
 
             cd $DEPLOY_DIR
 
