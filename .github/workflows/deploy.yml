@@ -18,24 +18,23 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            set -e
+              set -e
 
-            echo "🚀 Iniciando deploy..."
+              echo "🚀 Iniciando deploy..."
 
-            DEPLOY_DIR="deploys/audio-chat"
+              DEPLOY_DIR="deploys/audio-chat"
 
-            echo "🧹 Limpando deploy antigo..."
-            rm -rf $DEPLOY_DIR
+              rm -rf $DEPLOY_DIR
 
-            echo "📦 Clonando repositório..."
-            git clone https://GabrielMouraGit:${{ secrets.GIT_TOKEN }}@github.com/GabrielMouraGit/reactive-audio-connection.git $DEPLOY_DIR
+              git clone https://GabrielMouraGit:${{ secrets.GIT_TOKEN }}@github.com/GabrielMouraGit/audio-chat.git $DEPLOY_DIR
 
-            cd $DEPLOY_DIR
+              cd $DEPLOY_DIR
 
-            echo "🛑 Parando containers antigos..."
-            sudo docker compose down || true
+              echo "📂 Conteúdo do diretório:"
+              ls -la
 
-            echo "🔨 Buildando e subindo containers..."
-            sudo docker compose up --build -d --remove-orphans
+              echo "🛑 Parando containers antigos..."
+              sudo docker compose down || true
 
-            echo "✅ Deploy finalizado com sucesso!"
+              echo "🔨 Subindo containers..."
+              sudo docker compose up --build -d
